@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets;
+using UnityEngine.EventSystems;
 
 public class PlayerMovementScript : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PlayerMovementScript : MonoBehaviour
     private Transform PlayerTransform;
 
     public Vector3 TargetMovePosition;
+    private Action onArriveAction;
+
 
     // Use this for initialization
     void Start()
@@ -30,9 +33,13 @@ public class PlayerMovementScript : MonoBehaviour
         var dir = TargetMovePosition - PlayerTransform.position;
 
         var f = Time.deltaTime * MoveSpeed;
-        PlayerTransform.position = dir.magnitude < f ? TargetMovePosition : PlayerTransform.position + dir.normalized * f;
-
-
+        if (dir.magnitude < f)
+        {
+            PlayerTransform.position = TargetMovePosition;
+            if (onArriveAction != null) onArriveAction();
+            onArriveAction = null;
+        }
+        else PlayerTransform.position = PlayerTransform.position + dir.normalized*f;
 
 
         var hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition)).OrderBy(h => h.distance);
@@ -68,7 +75,41 @@ public class PlayerMovementScript : MonoBehaviour
 
     public void MoveTo(Vector3 position)
     {
+        MoveTo(position, null);
+    }
+    public void MoveTo(Vector3 position, Action onArrive)
+    {
         TargetMovePosition = position;
         ClickedPositionIndicator.Show(position);
+        onArriveAction = onArrive;
     }
+
+
+    public List<InventoryItem> Inventory = new List<InventoryItem>();
+
+    public void PickupResources(string resourceType, int amount)
+    {
+        var i = Inventory.FirstOrDefault(j => j.ResourceType == resourceType);
+        if (i == null)
+        {
+            i = new InventoryItem(resourceType, 0);
+            Inventory.Add(i);
+        }
+
+        i.Amount += amount;
+    }
+
+    [Serializable]
+    public class InventoryItem
+    {
+        public string ResourceType;
+        public int Amount;
+
+        public InventoryItem(string resourceType, int amount)
+        {
+            ResourceType = resourceType;
+            Amount = amount;
+        }
+    }
+
 }

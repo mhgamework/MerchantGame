@@ -2,8 +2,11 @@
 using System.Collections;
 using Assets;
 
+[ExecuteInEditMode]
 public class DroppedResourcesScript : MonoBehaviour, IPlayerInteractable
 {
+    public string ResourceType = "gold";
+    public int Amount = 1;
 
     // Use this for initialization
     void Start()
@@ -19,8 +22,13 @@ public class DroppedResourcesScript : MonoBehaviour, IPlayerInteractable
 
     public void Interact(PlayerMovementScript playerMovementScript)
     {
-        playerMovementScript.MoveTo(transform.position);
+        playerMovementScript.MoveTo(transform.position, () =>
+        {
+            playerMovementScript.PickupResources(ResourceType, Amount);
+            Destroy(gameObject);
+
+        });
     }
 
-  
+
 }
