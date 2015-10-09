@@ -9,7 +9,9 @@ using UnityEngine.EventSystems;
 public class PlayerMovementScript : MonoBehaviour
 {
 
-    public float MoveSpeed = 3;
+    public float NormalMoveSpeed = 3;
+    public float RoadFactor = 2;
+    private float ActiveMoveSpeed = 3;
     public Vector3 TargetedPosition;
     [SerializeField]
     private ClickedPositionIndicatorScript ClickedPositionIndicator;
@@ -30,16 +32,19 @@ public class PlayerMovementScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // hack
+        updateMovementSpeed();
+
         var dir = TargetMovePosition - PlayerTransform.position;
 
-        var f = Time.deltaTime * MoveSpeed;
+        var f = Time.deltaTime * ActiveMoveSpeed;
         if (dir.magnitude < f)
         {
             PlayerTransform.position = TargetMovePosition;
             if (onArriveAction != null) onArriveAction();
             onArriveAction = null;
         }
-        else PlayerTransform.position = PlayerTransform.position + dir.normalized*f;
+        else PlayerTransform.position = PlayerTransform.position + dir.normalized * f;
 
 
         var hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition)).OrderBy(h => h.distance);
@@ -70,6 +75,17 @@ public class PlayerMovementScript : MonoBehaviour
 	    }*/
 
 
+    }
+
+    private void updateMovementSpeed()
+    {
+        var pos = Point3.Floor(PlayerTransform.position / 5);
+        pos.y = 0;
+        Debug.Log(pos.x);
+        var road = FindObjectsOfType<RoadScript>().FirstOrDefault(r => r.CalculatePos() == pos);
+        ActiveMoveSpeed = NormalMoveSpeed;
+        
+        if (road != null) { ActiveMoveSpeed += RoadFactor; Debug.Log("road"); }
     }
 
 

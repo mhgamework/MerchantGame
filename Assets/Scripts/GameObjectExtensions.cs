@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Assets
 {
@@ -13,5 +14,19 @@ namespace Assets
             return ret;
         }
 
+
+        public static Bounds GetTotalMeshRendererBounds(this GameObject b)
+        {
+            var bounds = b.GetComponentsInChildren<MeshRenderer>()
+                 .Select(r => r.bounds)
+                 .Aggregate((el, acc) =>
+                 {
+                     acc.Encapsulate(el);
+                     return acc;
+                 });
+            return bounds;
+        }
     }
+
+
 }

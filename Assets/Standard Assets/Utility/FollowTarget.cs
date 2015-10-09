@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace UnityStandardAssets.Utility
 {
+    [ExecuteInEditMode]
     public class FollowTarget : MonoBehaviour
     {
         public Transform target;

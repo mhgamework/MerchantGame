@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
+using Assets;
 using UnityEngine.UI;
 
 public class RenderToTextureScript : MonoBehaviour
@@ -84,13 +85,7 @@ public class RenderToTextureScript : MonoBehaviour
         gameObject.transform.position = Vector3.zero;
         gameObject.transform.localScale = Vector3.one;
 
-        var bounds = gameObject.GetComponentsInChildren<MeshRenderer>()
-            .Select(r => r.bounds)
-            .Aggregate((el, acc) =>
-            {
-                acc.Encapsulate(el);
-                return acc;
-            });
+        var bounds = gameObject.GetTotalMeshRendererBounds();
 
 
         var scale = Vector3.one / (Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z));
@@ -99,13 +94,7 @@ public class RenderToTextureScript : MonoBehaviour
 
 
 
-        bounds = gameObject.GetComponentsInChildren<MeshRenderer>()
-            .Select(r => r.bounds)
-            .Aggregate((el, acc) =>
-            {
-                acc.Encapsulate(el);
-                return acc;
-            });
+        bounds = gameObject.GetTotalMeshRendererBounds();
 
         gameObject.transform.position = -bounds.center;
 
