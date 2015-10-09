@@ -56,6 +56,7 @@ public class PlayerMovementScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
             var interactables = hits.First().collider.GetComponentsInParent(typeof(IPlayerInteractable)).Cast<IPlayerInteractable>().ToArray();
             if (!interactables.Any())
             {
@@ -81,11 +82,10 @@ public class PlayerMovementScript : MonoBehaviour
     {
         var pos = Point3.Floor(PlayerTransform.position / 5);
         pos.y = 0;
-        Debug.Log(pos.x);
         var road = FindObjectsOfType<RoadScript>().FirstOrDefault(r => r.CalculatePos() == pos);
         ActiveMoveSpeed = NormalMoveSpeed;
         
-        if (road != null) { ActiveMoveSpeed += RoadFactor; Debug.Log("road"); }
+        if (road != null) { ActiveMoveSpeed += RoadFactor; ; }
     }
 
 

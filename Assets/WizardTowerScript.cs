@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets;
 
-public class WizardTowerScript : MonoBehaviour {
+public class WizardTowerScript : MonoBehaviour,IPlayerInteractable {
 
 	// Use this for initialization
 	void Start () {
@@ -12,4 +13,12 @@ public class WizardTowerScript : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void Interact(PlayerMovementScript playerMovementScript)
+    {
+        playerMovementScript.MoveTo(transform.position, () =>
+        {
+            WizardTowerUIScript.Instance().Show();
+        });
+    }
 }

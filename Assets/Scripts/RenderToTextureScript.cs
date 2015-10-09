@@ -45,9 +45,9 @@ public class RenderToTextureScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var texture = PrefabToTexture(prefab);
+        /*var texture = PrefabToTexture(prefab);
 
-        img.texture = texture;
+        img.texture = texture;*/
     }
 
     public Texture2D PrefabToTexture(GameObject prefab)
