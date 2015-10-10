@@ -5,7 +5,7 @@ public class InventoryUIScript : MonoBehaviour
 {
 
     [SerializeField]
-    private PlayerMovementScript Player;
+    private InventoryScript Player;
 
 
 	// Use this for initialization

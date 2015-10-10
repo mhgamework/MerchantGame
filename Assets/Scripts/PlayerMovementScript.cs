@@ -6,12 +6,12 @@ using System.Linq;
 using Assets;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(InventoryScript))]
+[RequireComponent(typeof(HeroScript))]
 public class PlayerMovementScript : MonoBehaviour
 {
 
-    public float NormalMoveSpeed = 3;
-    public float RoadFactor = 2;
-    private float ActiveMoveSpeed = 3;
+   
     public Vector3 TargetedPosition;
     [SerializeField]
     private ClickedPositionIndicatorScript ClickedPositionIndicator;
@@ -22,22 +22,21 @@ public class PlayerMovementScript : MonoBehaviour
     public Vector3 TargetMovePosition;
     private Action onArriveAction;
 
+    private HeroScript hero;
 
     // Use this for initialization
     void Start()
     {
         TargetMovePosition = transform.position;
+        hero = GetComponent<HeroScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // hack
-        updateMovementSpeed();
-
         var dir = TargetMovePosition - PlayerTransform.position;
 
-        var f = Time.deltaTime * ActiveMoveSpeed;
+        var f = Time.deltaTime * hero.ActiveMoveSpeed;
         if (dir.magnitude < f)
         {
             PlayerTransform.position = TargetMovePosition;
@@ -78,15 +77,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     }
 
-    private void updateMovementSpeed()
-    {
-        var pos = Point3.Floor(PlayerTransform.position / 5);
-        pos.y = 0;
-        var road = FindObjectsOfType<RoadScript>().FirstOrDefault(r => r.CalculatePos() == pos);
-        ActiveMoveSpeed = NormalMoveSpeed;
-        
-        if (road != null) { ActiveMoveSpeed += RoadFactor; ; }
-    }
+   
 
 
     public void MoveTo(Vector3 position)
@@ -101,31 +92,15 @@ public class PlayerMovementScript : MonoBehaviour
     }
 
 
-    public List<InventoryItem> Inventory = new List<InventoryItem>();
 
     public void PickupResources(string resourceType, int amount)
     {
-        var i = Inventory.FirstOrDefault(j => j.ResourceType == resourceType);
-        if (i == null)
-        {
-            i = new InventoryItem(resourceType, 0);
-            Inventory.Add(i);
-        }
-
-        i.Amount += amount;
+        GetComponent<InventoryScript>().AddResources(resourceType, amount);
     }
 
-    [Serializable]
-    public class InventoryItem
+
+    public Vector3 GetPosition()
     {
-        public string ResourceType;
-        public int Amount;
-
-        public InventoryItem(string resourceType, int amount)
-        {
-            ResourceType = resourceType;
-            Amount = amount;
-        }
+        return PlayerTransform.position;
     }
-
 }

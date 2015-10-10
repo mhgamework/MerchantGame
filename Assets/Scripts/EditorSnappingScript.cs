@@ -2,6 +2,9 @@
 
 namespace Assets.Scripts
 {
+    /// <summary>
+    /// Idea: use floor instead of round, this makes it possible to add this script to already placed objects and not have them overlap, since they will all snap in the same direction
+    /// </summary>
     [ExecuteInEditMode]
     public class EditorSnappingScript : MonoBehaviour
     {

@@ -1,14 +1,12 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 
 [ExecuteInEditMode]
-public class RoadScript : MonoBehaviour
+public class NeighbourConnectScript : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject EdgePrefab;
+
+    public string ConnectionType = "Default";
 
     public int GridSize = 5;
 
@@ -68,9 +66,10 @@ public class RoadScript : MonoBehaviour
         }
     }
 
-    private RoadScript getNeighbour(Point3 point3, Point3 dir)
+    private NeighbourConnectScript getNeighbour(Point3 point3, Point3 dir)
     {
-        return FindObjectsOfType<RoadScript>().FirstOrDefault(r => r.CalculatePos() == point3 + dir);
+        
+        return FindObjectsOfType<NeighbourConnectScript>().FirstOrDefault(r => r.ConnectionType == ConnectionType &&  r.CalculatePos() == point3 + dir);
     }
 
     public Point3 CalculatePos()
