@@ -60,7 +60,7 @@ public class RenderToTextureScript : MonoBehaviour
         transform.position = new Vector3(-10, 10, -10);
 
         var camera = GetComponent<Camera>();
-        camera.targetTexture = RenderTexture.GetTemporary(128, 128, 16);
+        camera.targetTexture = RenderTexture.GetTemporary(256, 256, 16);
         var texture = RTImage(camera);
         camera.targetTexture = null;
         RenderTexture.ReleaseTemporary(camera.targetTexture);
