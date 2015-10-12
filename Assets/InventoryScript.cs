@@ -31,6 +31,26 @@ public class InventoryScript : MonoBehaviour {
         i.Amount += amount;
     }
 
+    public void RemoveResourcse(string resourceType, int amount)
+    {
+        if (amount < 0) throw new InvalidOperationException();
+        if (amount == 0) return;
+
+        var i = Inventory.FirstOrDefault(j => j.ResourceType == resourceType);
+        if (i == null) throw new InvalidOperationException();
+
+        if (amount > i.Amount) throw new InvalidOperationException();
+        i.Amount -= amount;
+    }
+
+    public int GetResourceCount(string resourceType)
+    {
+        var i = Inventory.FirstOrDefault(j => j.ResourceType == resourceType);
+        if (i == null) return 0;
+        return i.Amount;
+    }
+
+
     [Serializable]
     public class InventoryItem
     {
