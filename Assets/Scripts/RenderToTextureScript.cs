@@ -56,8 +56,8 @@ public class RenderToTextureScript : MonoBehaviour
         SetLayerRecursively(gameObject, LayerMask.NameToLayer("ObjectSnapshot"));
 
 
-        transform.LookAt(new Vector3(0, 0, 0));
         transform.position = new Vector3(-10, 10, -10);
+        transform.LookAt(new Vector3(0, 0, 0));
 
         var camera = GetComponent<Camera>();
         camera.targetTexture = RenderTexture.GetTemporary(256, 256, 16);

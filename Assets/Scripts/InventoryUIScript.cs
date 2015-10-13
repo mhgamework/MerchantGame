@@ -4,8 +4,7 @@ using System.Collections;
 public class InventoryUIScript : MonoBehaviour
 {
 
-    [SerializeField]
-    private InventoryScript Player;
+    public InventoryScript Player;
 
 
 	// Use this for initialization

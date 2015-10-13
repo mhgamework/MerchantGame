@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class InventoryUIStack : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class InventoryUIStack : MonoBehaviour
     private RawImage img;
     [SerializeField]
     private Text text;
+    [SerializeField]
+    private Text text2;
 
     private string resourceType;
     
@@ -23,12 +26,17 @@ public class InventoryUIStack : MonoBehaviour
 
     public void UpdateUI(string type, int amount)
     {
+        UpdateUI(new InventoryScript.InventoryItem(type, amount));
+    }
+    private void UpdateUIInternal(string type, int amount)
+    {
         if (resourceType != type)
         {
             resourceType = type;
             updateImage();
         }
         text.text = amount.ToString();
+        text2.text = amount.ToString();
     }
 
     private void updateImage()
@@ -36,5 +44,17 @@ public class InventoryUIStack : MonoBehaviour
         var type = ResourceTypesScript.Instance().Find(resourceType);
         var tex = RenderToTextureScript.Instance().PrefabToTexture(type.UIPrefab);
         img.texture = tex;
+    }
+
+    public void UpdateUI(InventoryScript.InventoryItem s)
+    {
+        if (s.IsEmpty)
+            gameObject.SetActive(false);
+        else
+        {
+            gameObject.SetActive(true);
+            UpdateUIInternal(s.ResourceType, s.Amount);
+
+        }
     }
 }
