@@ -30,6 +30,7 @@ public class InteractableInventoryUIScript : MonoBehaviour
         {
             DestroyImmediate(transform.GetChild(i).gameObject);
         }
+        transform.DetachChildren();
         for (int i = 0; i < NumSlots; i++)
         {
             var slot = Instantiate(ItemSlotPrefab);
