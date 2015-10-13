@@ -30,8 +30,8 @@ public class InventoryWindowScript : MonoBehaviour
 
             GetComponentsInChildren<Text>().First(t => t.name == "TitleA").text = nameA;
             GetComponentsInChildren<Text>().First(t => t.name == "TitleB").text = nameB;
-            GetComponentsInChildren<InventoryUIScript>().First(t => t.name == "InventoryA").Player = a;
-            GetComponentsInChildren<InventoryUIScript>().First(t => t.name == "InventoryB").Player = b;
+            GetComponentsInChildren<InteractableInventoryUIScript>().First(t => t.name == "InventoryA").SetInventory( a);
+            GetComponentsInChildren<InteractableInventoryUIScript>().First(t => t.name == "InventoryB").SetInventory( b);
         }
         catch (Exception)
         {

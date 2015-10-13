@@ -49,4 +49,10 @@ public class InteractableInventoryUIScript : MonoBehaviour
     }
 
 
+    public void SetInventory(InventoryScript inventoryScript)
+    {
+        TargetInventory = inventoryScript;
+        BuildUI();
+        UpdateUI();
+    }
 }

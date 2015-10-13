@@ -11,7 +11,7 @@ public class InventorySceneScript : MonoBehaviour
     // Use this for initialization
     void Start ()
 	{
-	    //FindObjectOfType<InventoryWindowScript>().ShowInventory(A,"A",B,"B");
+	    FindObjectOfType<InventoryWindowScript>().ShowInventory(A,"A",B,"B");
 	}
 	
 	// Update is called once per frame
