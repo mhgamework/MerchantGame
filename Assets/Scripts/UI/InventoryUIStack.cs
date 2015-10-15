@@ -42,6 +42,7 @@ public class InventoryUIStack : MonoBehaviour
     private void updateImage()
     {
         var type = ResourceTypesScript.Instance().Find(resourceType);
+        if (type.UIPrefab == null) throw new InvalidOperationException("No uiprefab found for type: " + type.Identifier);
         var tex = RenderToTextureScript.Instance().PrefabToTexture(type.UIPrefab);
         img.texture = tex;
     }

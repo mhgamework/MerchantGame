@@ -8,13 +8,13 @@ public class InteractableInventoryScript : MonoBehaviour, IPlayerInteractable
 
     public string InventoryName = "Chest";
 
+    [SerializeField]
     private InventoryScript inventory;
 
 
     // Use this for initialization
     void Start()
     {
-        inventory = GetComponent<InventoryScript>();
     }
 
     // Update is called once per frame

@@ -3,7 +3,7 @@ using System.Collections;
 using Assets;
 
 [RequireComponent(typeof(InventoryScript))]
-public class ResourceProducerScript : MonoBehaviour, IPlayerInteractable
+public class ResourceProducerScript : MonoBehaviour
 {
     [SerializeField]
     private Canvas WindowCanvas;
@@ -40,15 +40,6 @@ public class ResourceProducerScript : MonoBehaviour, IPlayerInteractable
             if (inventory.GetResourceCount(ProducedType) < Max)
                 inventory.AddResources(ProducedType, 1);
         }
-    }
-
-    public void Interact(PlayerMovementScript playerMovementScript)
-    {
-        playerMovementScript.MoveTo(transform.position, () =>
-        {
-            playerMovementScript.PickupResources(ProducedType, inventory.GetResourceCount(ProducedType));
-            inventory.RemoveResourcse(ProducedType, inventory.GetResourceCount(ProducedType));
-        });
     }
 
     public void ShowWindow()

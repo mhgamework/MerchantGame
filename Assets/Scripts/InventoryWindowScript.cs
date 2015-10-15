@@ -45,7 +45,7 @@ public class InventoryWindowScript : MonoBehaviour
     public void HideInventory()
     {
 
-        gameObject.SetActive(false);
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
 }

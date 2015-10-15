@@ -27,13 +27,13 @@ public class InventoryScript : MonoBehaviour
 
     public void AddResources(string resourceType, int amount)
     {
-        var i = Inventory.FirstOrDefault(j => j.ResourceType == resourceType);
+        var i = Inventory.FirstOrDefault(j => j.ResourceType == resourceType || j.IsEmpty);
         if (i == null)
         {
             i = new InventoryItem(resourceType, 0);
             Inventory.Add(i);
         }
-
+        i.ResourceType = resourceType;
         i.Amount += amount;
     }
 
