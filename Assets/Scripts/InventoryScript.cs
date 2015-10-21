@@ -115,4 +115,15 @@ public class InventoryScript : MonoBehaviour
 
         Inventory[slotNum] = InventoryItem.Empty;
     }
+
+    public int Count()
+    {
+        return Inventory.Sum(i => i.Amount);
+    }
+
+    public int Count(string resourceType)
+    {
+        return Inventory.Where(i => i.ResourceType == resourceType).Sum(i => i.Amount);
+
+    }
 }

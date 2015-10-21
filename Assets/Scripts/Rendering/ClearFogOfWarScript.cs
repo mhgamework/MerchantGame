@@ -6,14 +6,15 @@ public class ClearFogOfWarScript : MonoBehaviour
     public float Radius = 5;
     private FogOfWarScript fogOfWarScript;
     // Use this for initialization
-	void Start ()
-	{
-	    fogOfWarScript = FindObjectOfType<FogOfWarScript>();
-	}
+    void Start()
+    {
+        fogOfWarScript = FindObjectOfType<FogOfWarScript>();
+    }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
-        fogOfWarScript.MakeVisible(transform.position, Radius);
+        if (fogOfWarScript != null)
+            fogOfWarScript.MakeVisible(transform.position, Radius);
     }
 }

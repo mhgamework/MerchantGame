@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 public class PlayerMovementScript : MonoBehaviour
 {
 
-   
+
     public Vector3 TargetedPosition;
     [SerializeField]
     private ClickedPositionIndicatorScript ClickedPositionIndicator;
@@ -55,7 +55,7 @@ public class PlayerMovementScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (EventSystem.current.IsPointerOverGameObject()) return;
+            if (EventSystem.current && EventSystem.current.IsPointerOverGameObject()) return;
             var interactables = hits.First().collider.GetComponentsInParent(typeof(IPlayerInteractable)).Cast<IPlayerInteractable>().ToArray();
             if (!interactables.Any())
             {
@@ -77,7 +77,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     }
 
-   
+
 
 
     public void MoveTo(Vector3 position)
