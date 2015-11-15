@@ -7,4 +7,6 @@ public interface IWorld
     IBlock GetBlockAt(Vector3 v);
     void SetBlockAt(Vector3 v,IBlock block);
 
+    void UpdateBlockModel(IBlock block);
+
 }
