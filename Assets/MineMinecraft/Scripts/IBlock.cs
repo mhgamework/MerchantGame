@@ -9,7 +9,7 @@ namespace Assets.MineMinecraft
         /// Setter only used by world
         /// </summary>
         Vector3 Position { get; set; }
-        GameObject GetModel();
+        Transform GetModel();
         event Action ModelChanged;
         /// <summary>
         /// Called when block enters the world
