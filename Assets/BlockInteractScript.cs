@@ -10,7 +10,7 @@ public class BlockInteractScript : MonoBehaviour,IPointerClickHandler {
     {
         //eventData.selectedObject.transform.position
         IWorld world=DummyWorldManager.Instance().World;
-        world.SetBlockAt(transform.position, null);
+        //world.SetBlockAt(transform.position, null);
 
         
     }
