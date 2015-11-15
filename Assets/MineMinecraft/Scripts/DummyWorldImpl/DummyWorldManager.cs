@@ -3,11 +3,16 @@ using UnityEngine;
 
 namespace Assets.MineMinecraft.DummyWorldImpl
 {
-    public class DummyWorldManager:MonoBehaviour
+    public class DummyWorldManager:SingletonBehaviour<DummyWorldManager>
     {
         public Transform BlockPrefab;
 
         private DummyWorld world;
+
+        public IWorld World
+        {
+            get { return world; }
+        }
 
         public void Start()
         {
