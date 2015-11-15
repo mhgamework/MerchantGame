@@ -41,7 +41,7 @@ public class DummyWorld : IWorld
             oldbd.DestroyModel();
             
         }
-        blocks[v] = null;
+        blocks.Remove(v);
         if (block != null)
         {
             var bd = new BlockData();
