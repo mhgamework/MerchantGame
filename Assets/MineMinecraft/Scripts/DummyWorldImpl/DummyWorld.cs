@@ -17,6 +17,12 @@ public class DummyWorld : IWorld
         if (bd == null || bd.Block != block) throw new InvalidOperationException();
         return bd;
     }
+    private BlockData GetBlockData(Vector3 v)
+    {
+        if (!blocks.ContainsKey(v)) return null;
+        var bd = blocks[v];
+        return bd;
+    }
 
     public IBlock GetBlockAt(Vector3 v)
     {
@@ -28,18 +34,30 @@ public class DummyWorld : IWorld
     {
         Console.WriteLine("WORLD: Set block at " + v + " - " + block);
         v = v.Round();
-        var old = GetBlockAt(v);
-        if (old != null)
+        var oldbd = GetBlockData(v);
+        if (oldbd != null)
         {
-            old.OnDestroy();
+            oldbd.Block.OnDestroy();
+            oldbd.DestroyModel();
+            
         }
-        var bd = new BlockData();
-        blocks[v] = bd;
-        bd.Block = block;
-        block.Position = v;
-        block.OnCreate();
+        blocks[v] = null;
+        if (block != null)
+        {
+            var bd = new BlockData();
+            blocks[v] = bd;
+            bd.Block = block;
+            block.Position = v;
+            block.OnCreate();
 
-        // Update the block, and its neighbours (incase they are now hidden)
+            
+        }
+        // Update the block, and its neighbours (incase they are now hidden or visible)
+        updateBlockModelAndNeighbours(v);
+    }
+
+    private void updateBlockModelAndNeighbours(Vector3 v)
+    {
         UpdateBlockModel(v);
         for (int i = 0; i < CubeSides.Length; i++)
         {
