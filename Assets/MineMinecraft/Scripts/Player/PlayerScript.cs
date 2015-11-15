@@ -1,5 +1,6 @@
 ﻿using Assets.MineMinecraft.Blocks;
 using Assets.MineMinecraft.DummyWorldImpl;
+using Assets.MineMinecraft.MathUtils;
 using UnityEngine;
 
 namespace Assets.MineMinecraft.Scripts.Player
@@ -36,10 +37,10 @@ namespace Assets.MineMinecraft.Scripts.Player
             {
                 var hitPoint = result.HitPoint;
                 var blockPos = result.Block.Position;
-                if (hitPoint.x + 0.5 > blockPos.x)
-                {
-                    world.SetBlockAt(new Vector3(blockPos.x+1, blockPos.y, blockPos.z), new SimpleBlock(BlockPrefab));
-                }
+                var direction = ((hitPoint - blockPos)*2.001f).IntegerPart();
+                world.SetBlockAt(blockPos+direction, new SimpleBlock(BlockPrefab));
+                
+
             }
             //world.SetBlockAt(result.Block.Position, null);
         }
