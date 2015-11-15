@@ -13,4 +13,5 @@ public interface IWorld
     /// <param name="block"></param>
     void InvalidateBlockModel(IBlock block);
 
+    WorldRaycastResult Raycast(Ray ray);
 }

@@ -18,7 +18,7 @@ namespace Assets.MineMinecraft.DummyWorldImpl
         {
             world = new DummyWorld();
 
-            int size = 20;
+            int size = 30;
             for (int x = 0; x < size; x++)
             {
                 for (int y = 0; y < size; y++)

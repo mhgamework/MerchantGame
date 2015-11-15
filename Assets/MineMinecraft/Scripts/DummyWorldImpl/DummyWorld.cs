@@ -76,6 +76,23 @@ public class DummyWorld : IWorld
 
     }
 
+    public WorldRaycastResult Raycast(Ray ray)
+    {
+        //Use physics raycasting for now.
+
+        RaycastHit info;
+        if (!Physics.Raycast(ray,out info)) return WorldRaycastResult.Empty;
+
+        var ret = new WorldRaycastResult();
+        ret.IsHit = true;
+        ret.HitPoint = info.point;
+        ret.Block = GetBlockAt(info.collider.transform.position);
+
+        if (ret.Block == null) return WorldRaycastResult.Empty;
+        return ret;
+
+    }
+
 
     private void UpdateBlockModel(Vector3 pos)
     {
