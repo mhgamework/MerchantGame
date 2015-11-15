@@ -9,7 +9,14 @@ public class DummyWorld : IWorld
 {
     private Dictionary<Vector3, BlockData> blocks = new Dictionary<Vector3, BlockData>();
 
+    public static Vector3[] CubeSides = new Vector3[] { Vector3.right, Vector3.up, Vector3.forward, -Vector3.right, -Vector3.up, -Vector3.forward };
 
+    private BlockData GetBlockData(IBlock block)
+    {
+        var bd = blocks[block.Position];
+        if (bd == null || bd.Block != block) throw new InvalidOperationException();
+        return bd;
+    }
 
     public IBlock GetBlockAt(Vector3 v)
     {
@@ -30,26 +37,69 @@ public class DummyWorld : IWorld
         blocks[v] = bd;
         bd.Block = block;
         block.Position = v;
-        UpdateBlockModel(block);
         block.OnCreate();
+
+        // Update the block, and its neighbours (incase they are now hidden)
+        UpdateBlockModel(v);
+        for (int i = 0; i < CubeSides.Length; i++)
+        {
+            UpdateBlockModel(v + CubeSides[i]);
+        }
     }
 
-    public void UpdateBlockModel(IBlock block)
+    public void InvalidateBlockModel(IBlock block)
     {
-        var bd = blocks[block.Position.Round()];
-        if (bd == null || bd.Block != block) throw new InvalidOperationException();
+        var bd = GetBlockData(block);
+
         if (bd.Model != null)
-        GameObject.Destroy(bd.Model.gameObject);
-        bd.Model = Object.Instantiate(block.GetModel());
-        bd.Model.position = block.Position;
+            bd.DestroyModel();
+
+        UpdateBlockModel(bd.Block.Position);
 
     }
 
+
+    private void UpdateBlockModel(Vector3 pos)
+    {
+        BlockData bd;
+        if (!blocks.TryGetValue(pos, out bd)) return;
+        if (isHidden(pos)) bd.DestroyModel();
+        else
+        {
+            // Assume unchanged, if the model needs refresh, the invalidatelbockmodel should've taken care of the removal
+            if (bd.Model != null)
+                return;
+
+            var block = bd.Block;
+
+            bd.Model = Object.Instantiate(block.GetModel());
+            bd.Model.position = block.Position;
+        }
+    }
+
+    private bool isHidden(Vector3 pos)
+    {
+        for (int i = 0; i < CubeSides.Length; i++)
+        {
+            if (!blocks.ContainsKey(pos + CubeSides[i]))
+                return false;
+        }
+        return true;
+    }
 
     private class BlockData
     {
         public IBlock Block;
         public Transform Model;
+
+
+        public void DestroyModel()
+        {
+            if (Model == null) return;
+            GameObject.Destroy(Model.gameObject);
+            Model = null;
+        }
+
     }
 
 }
