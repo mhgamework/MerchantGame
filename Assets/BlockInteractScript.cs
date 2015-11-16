@@ -15,13 +15,4 @@ public class BlockInteractScript : MonoBehaviour,IPointerClickHandler {
         
     }
 
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
