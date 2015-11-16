@@ -19,6 +19,10 @@ namespace Assets.MineMinecraft.DummyWorldImpl
 
         public void Start()
         {
+            // Set transform to identity, since we use this as simpleblock container and they should map to voxel coordinates without transform
+            transform.position = new Vector3();
+            transform.rotation = Quaternion.identity;
+            transform.localScale = Vector3.one;
             world = new DummyWorld(transform);
 
             world.DoWithoutModelUpdate(genWorld);
