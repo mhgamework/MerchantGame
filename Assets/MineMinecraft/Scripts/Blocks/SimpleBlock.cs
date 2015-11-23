@@ -27,7 +27,7 @@ namespace Assets.MineMinecraft.Blocks
         {
         }
 
-        public void OnInteract(Vector3 localMousePoint, IPlayer player)
+        public virtual void OnInteract(Vector3 localMousePoint, IPlayer player)
         {
         }
     }

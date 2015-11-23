@@ -5,6 +5,7 @@ using Assets.MineMinecraft;
 public interface IWorld
 {
     IBlock GetBlockAt(Vector3 v);
+    Transform getBlockTransform(IBlock block);
     void SetBlockAt(Vector3 v,IBlock block);
 
     /// <summary>

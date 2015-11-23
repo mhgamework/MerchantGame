@@ -19,6 +19,11 @@ public class DummyWorld : IWorld
         this.dynamicObjectsContainer = dynamicObjectsContainer;
     }
 
+    public Transform getBlockTransform(IBlock block)
+    {
+        return GetBlockData(block).Model;
+    }
+
     private BlockData GetBlockData(IBlock block)
     {
         var bd = blocks[block.Position];

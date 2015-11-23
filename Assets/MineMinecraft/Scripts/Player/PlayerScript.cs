@@ -1,11 +1,12 @@
 ﻿using Assets.MineMinecraft.Blocks;
 using Assets.MineMinecraft.DummyWorldImpl;
 using Assets.MineMinecraft.MathUtils;
+using Assets.MineMinecraft.Scripts.Blocks;
 using UnityEngine;
 
 namespace Assets.MineMinecraft.Scripts.Player
 {
-    public class PlayerScript : MonoBehaviour
+    public class PlayerScript : MonoBehaviour,IPlayer
     {
 
         public Transform BlockPrefab;
@@ -38,10 +39,15 @@ namespace Assets.MineMinecraft.Scripts.Player
                 var hitPoint = result.HitPoint;
                 var blockPos = result.Block.Position;
                 var direction = ((hitPoint - blockPos)*2.001f).IntegerPart();
-                world.SetBlockAt(blockPos+direction, new SimpleBlock(BlockPrefab));
+                world.SetBlockAt(blockPos+direction, new LampBlock(BlockPrefab));
                 
 
             }
+            if (Input.GetMouseButtonDown(2))
+            {
+                result.Block.OnInteract(result.HitPoint,this );
+            }
+
             //world.SetBlockAt(result.Block.Position, null);
         }
     }
