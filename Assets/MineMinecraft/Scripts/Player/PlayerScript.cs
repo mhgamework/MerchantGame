@@ -35,9 +35,13 @@ namespace Assets.MineMinecraft.Scripts.Player
             {
                 currentBlockType = BlockRepository.GetByName("wood");
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha0))
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 currentBlockType = BlockRepository.GetByName("stone");
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                currentBlockType = BlockRepository.GetByName("lamp");
             }
         }
 

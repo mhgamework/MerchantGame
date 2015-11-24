@@ -8,11 +8,14 @@ using UnityEngine;
 
 namespace Assets.MineMinecraft.Scripts.Blocks
 {
-    class LampBlock : SimpleBlock
+    class LampBlock : UnityBlock
     {
         private Boolean lightOn = true;
+        public Material materialOff;
+        public Material materialOn;
+        public Transform modelPrefab;
 
-        public LampBlock(Transform modelPrefab): base(modelPrefab)
+        public LampBlock()
         {
         }
 
@@ -24,20 +27,27 @@ namespace Assets.MineMinecraft.Scripts.Blocks
             var light = world.getBlockTransform(this).GetComponentInChildren<Light>();
             if (lightOn)
             {
-                meshRender.material = Resources.Load("LampOff") as Material; ;
+                meshRender.material = materialOff; 
                 light.enabled = false;
             }
             else
             {
-                meshRender.material = Resources.Load("LampOn") as Material; ;
+                meshRender.material = materialOn; 
                 light.enabled = true;
             }
             lightOn = !lightOn;
+        }
+
+        public override Transform GetModel()
+        {
+            return modelPrefab;
         }
 
         public override void OnInteract(Vector3 localMousePoint, IPlayer player)
         {
             switchLight();
         }
+
+        public override string TypeName { get { return "lamp"; } }
     }
 }
